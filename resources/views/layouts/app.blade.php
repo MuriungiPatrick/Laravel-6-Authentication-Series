@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -10,14 +10,14 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -51,10 +51,23 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                  <img src="/img/avatar/{{ Auth::user()->avatar }}" alt="profile_picture"style="border-radius:50%;width:32px; height:32px;">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        Dashboard
+                                    </a>
+                                    {{-- end dashboard link --}}
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        Profile Settings
+                                    </a>
+                                    {{-- end Profile settings link --}}
+                                    <a class="dropdown-item" href="{{ route('changepassword') }}">
+                                        Change Password
+                                    </a>
+                                    {{-- end change password link --}}
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -77,4 +90,16 @@
         </main>
     </div>
 </body>
+<script type="text/javascript">
+  $('#job_title').on('keyup', function() {
+    var theTitle = this.value.toLowerCase().trim();
+    slugInput = $('#slug'),
+    theSlug = theTitle.replace(/&/g, '-and-')
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+|-+&/g, '');
+
+    slugInput.val(theSlug);
+  });
+</script>
 </html>
